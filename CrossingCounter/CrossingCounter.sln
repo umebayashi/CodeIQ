@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FS", "FS", "{D8D848D2-D765-4FD2-A632-EE430809F4B8}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "CrossingCounter_FS", "FS\CrossingCounter_FS\CrossingCounter_FS.fsproj", "{3CDC5BF5-E2C0-41BD-9E1C-DC3A1F991991}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3CDC5BF5-E2C0-41BD-9E1C-DC3A1F991991}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CDC5BF5-E2C0-41BD-9E1C-DC3A1F991991}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CDC5BF5-E2C0-41BD-9E1C-DC3A1F991991}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CDC5BF5-E2C0-41BD-9E1C-DC3A1F991991}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3CDC5BF5-E2C0-41BD-9E1C-DC3A1F991991} = {D8D848D2-D765-4FD2-A632-EE430809F4B8}
+	EndGlobalSection
+EndGlobal
