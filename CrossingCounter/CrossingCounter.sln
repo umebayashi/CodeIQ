@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FS", "FS", "{D8D848D2-D765-4FD2-A632-EE430809F4B8}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "CrossingCounter_FS", "FS\CrossingCounter_FS\CrossingCounter_FS.fsproj", "{3CDC5BF5-E2C0-41BD-9E1C-DC3A1F991991}"
