@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CountEveryoneMixup
@@ -10,7 +11,7 @@ namespace CountEveryoneMixup
 	{
 		static void Main(string[] args)
 		{
-			var counter = new EveryoneMixupCounter(5);
+			var counter = new EveryoneMixupCounter(9);
 			var count = counter.Count();
 
 			Console.WriteLine(count);
@@ -25,11 +26,9 @@ namespace CountEveryoneMixup
 			public EveryoneMixupCounter(int number)
 			{
 				this.number = number;
-				this.stack = new Stack<int>(number);
 			}
 
 			private int number;
-			private Stack<int> stack;
 			private int count;
 
 			/// <summary>
@@ -39,20 +38,18 @@ namespace CountEveryoneMixup
 			public int Count()
 			{
 				this.count = 0;
-				this.stack.Clear();
 
-				var numbers = Enumerable.Range(0, number);
+				var numbers = Enumerable.Range(0, number).ToArray();
 				var nextIndex = 0;
 
-				foreach (var num in numbers.Where(x => x != nextIndex))
+				Parallel.ForEach(numbers.Where(x => x != nextIndex), num =>
 				{
-					this.stack.Push(num);
-					var ext = numbers.Except(this.stack);
+					var stack = new Stack<int>(this.number);
+					stack.Push(num);
+					var ext = numbers.Except(stack).ToArray();
 
-					this.CountInternal(ext, nextIndex + 1);
-
-					this.stack.Pop();
-				}
+					this.CountInternal(stack, ext, nextIndex + 1);
+				});
 
 				return this.count;
 			}
@@ -62,22 +59,22 @@ namespace CountEveryoneMixup
 			/// </summary>
 			/// <param name="numbers"></param>
 			/// <param name="nextIndex"></param>
-			private void CountInternal(IEnumerable<int> numbers, int nextIndex)
+			private void CountInternal(Stack<int> stack, int[] numbers, int nextIndex)
 			{
-				if (this.stack.Count == this.number)
+				if (stack.Count == this.number)
 				{
-					this.count++;
+					Interlocked.Increment(ref this.count);
 					return;
 				}
 
 				foreach (var num in numbers.Where(x => x != nextIndex))
 				{
-					this.stack.Push(num);
-					var ext = numbers.Except(this.stack);
+					stack.Push(num);
+					var ext = numbers.Except(stack).ToArray();
 
-					this.CountInternal(ext, nextIndex + 1);
+					this.CountInternal(stack, ext, nextIndex + 1);
 
-					this.stack.Pop();
+					stack.Pop();
 				}
 			}
 		}
