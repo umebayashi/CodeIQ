@@ -8,69 +8,77 @@ namespace CountEveryoneMixup
 {
 	class Program
 	{
-		static int count;
-
 		static void Main(string[] args)
 		{
-			count = 0;
-			var list = CountEveryoneMixup(11);
+			var counter = new EveryoneMixupCounter(5);
+			var count = counter.Count();
 
-			//int num = 0;
-			//foreach (var array in list)
-			//{
-			//	num++;
-			//	Console.Write(num.ToString("(0000000000) "));
-			//	for (int i = 0; i < array.Length; i++)
-			//	{
-			//		Console.Write(array[i]);
-			//		Console.Write(' ');
-			//	}
-			//	Console.WriteLine();
-			//}
 			Console.WriteLine(count);
 		}
 
-		/// <summary>
-		/// 全員が取り違える組み合わせの個数
-		/// </summary>
-		/// <param name="number"></param>
-		/// <returns></returns>
-		static List<int[]> CountEveryoneMixup(int number)
+		class EveryoneMixupCounter
 		{
-			var list = new List<int[]>();
-			var numbers = Enumerable.Range(0, number).ToArray();
-			var stack = new Stack<int>(number);
-			var nextIndex = 0;
-
-			foreach (var num in numbers.Where(x => x != nextIndex))
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="number">計算対象の人数</param>
+			public EveryoneMixupCounter(int number)
 			{
-				stack.Push(num);
-				var ext = numbers.Except(stack);
-
-				CountInternal(number, list, stack, ext, nextIndex + 1);
-
-				stack.Pop();
+				this.number = number;
+				this.stack = new Stack<int>(number);
 			}
 
-			return list;
-		}
+			private int number;
+			private Stack<int> stack;
+			private int count;
 
-		static void CountInternal(int number, List<int[]> list, Stack<int> stack, IEnumerable<int> numbers, int nextIndex)
-		{
-			if (stack.Count == number)
+			/// <summary>
+			/// 全員がパソコンを取り違えるパターンの個数を数える
+			/// </summary>
+			/// <returns></returns>
+			public int Count()
 			{
-				//list.Add(stack.Reverse().ToArray());
-				count++;
-				return;
+				this.count = 0;
+				this.stack.Clear();
+
+				var numbers = Enumerable.Range(0, number);
+				var nextIndex = 0;
+
+				foreach (var num in numbers.Where(x => x != nextIndex))
+				{
+					this.stack.Push(num);
+					var ext = numbers.Except(this.stack);
+
+					this.CountInternal(ext, nextIndex + 1);
+
+					this.stack.Pop();
+				}
+
+				return this.count;
 			}
 
-			foreach (var num in numbers.Where(x => x != nextIndex))
+			/// <summary>
+			/// 再帰処理用の内部関数
+			/// </summary>
+			/// <param name="numbers"></param>
+			/// <param name="nextIndex"></param>
+			private void CountInternal(IEnumerable<int> numbers, int nextIndex)
 			{
-				stack.Push(num);
-				var ext = numbers.Except(stack);
-				CountInternal(number, list, stack, ext, nextIndex + 1);
+				if (this.stack.Count == this.number)
+				{
+					this.count++;
+					return;
+				}
 
-				stack.Pop();
+				foreach (var num in numbers.Where(x => x != nextIndex))
+				{
+					this.stack.Push(num);
+					var ext = numbers.Except(this.stack);
+
+					this.CountInternal(ext, nextIndex + 1);
+
+					this.stack.Pop();
+				}
 			}
 		}
 	}
