@@ -11,7 +11,7 @@ namespace CountEveryoneMixup
 	{
 		static void Main(string[] args)
 		{
-			var counter = new EveryoneMixupCounter(9);
+			var counter = new EveryoneMixupCounter(6);
 			var count = counter.Count();
 
 			Console.WriteLine(count);
@@ -30,6 +30,7 @@ namespace CountEveryoneMixup
 
 			private int number;
 			private int count;
+			private static readonly object syncObj = new object();
 
 			/// <summary>
 			/// 全員がパソコンを取り違えるパターンの個数を数える
@@ -63,7 +64,18 @@ namespace CountEveryoneMixup
 			{
 				if (stack.Count == this.number)
 				{
-					Interlocked.Increment(ref this.count);
+					lock (syncObj)
+					{
+						this.count++;
+
+						Console.Write(this.count.ToString("(0000000000) "));
+						foreach (var n in stack.Reverse())
+						{
+							Console.Write(n);
+							Console.Write(' ');
+						}
+						Console.WriteLine();
+					}
 					return;
 				}
 
