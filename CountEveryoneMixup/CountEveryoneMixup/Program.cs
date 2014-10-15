@@ -1,20 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace CountEveryoneMixup
 {
 	class Program
 	{
+		/// <summary>
+		/// 人数
+		/// </summary>
+		private const int PERSON_NUMBER = 12;
+
 		static void Main(string[] args)
 		{
-			var counter = new EveryoneMixupCounter(6);
-			var count = counter.Count();
+			var counter = new EveryoneMixupCounter(PERSON_NUMBER);
 
-			Console.WriteLine(count);
+			var petternCount = counter.Count();
+
+			Console.WriteLine("{0}通り", petternCount);
 		}
 
 		class EveryoneMixupCounter
@@ -67,14 +71,6 @@ namespace CountEveryoneMixup
 					lock (syncObj)
 					{
 						this.count++;
-
-						Console.Write(this.count.ToString("(0000000000) "));
-						foreach (var n in stack.Reverse())
-						{
-							Console.Write(n);
-							Console.Write(' ');
-						}
-						Console.WriteLine();
 					}
 					return;
 				}
