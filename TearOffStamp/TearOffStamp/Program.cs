@@ -55,6 +55,28 @@ namespace TearOffStamp
 		}
 
 		/// <summary>
+		/// 切手の座標を示す構造体
+		/// </summary>
+		struct Coordinate
+		{
+			public Coordinate(int x, int y)
+			{
+				X = x;
+				Y = y;
+			}
+
+			/// <summary>
+			/// 縦位置
+			/// </summary>
+			public int X;
+
+			/// <summary>
+			/// 横位置
+			/// </summary>
+			public int Y;
+		}
+
+		/// <summary>
 		/// 切手の切り取り方のパターン数を計算する
 		/// </summary>
 		/// <param name="vLength">切手シートの縦の枚数</param>
@@ -63,6 +85,14 @@ namespace TearOffStamp
 		/// <returns>切手の切り取り方のパターン数</returns>
 		static int CountTearOffPatterns(int vLength, int hLength, int count)
 		{
+			for (int y = 0; y < vLength; y++)
+			{
+				for (int x = 0; x < hLength; x++)
+				{
+					var start = new Coordinate(x, y);
+				}
+			}
+			
 			return -1;
 		}
 	}
